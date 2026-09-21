@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Exercise 2 - استمع وتدرّب</title>
+<style>
+  :root{
+    --navy:#1e3a6e;
+    --pink:#f288a8;
+    --purple:#b09be0;
+    --green:#7fd9a8;
+    --peach:#f5b98a;
+    --gold:#f0c94a;
+    --teal:#5fd0c9;
+    --lav:#c9a8e8;
+    --sky:#eef8fb;
+    --ink:#1b2b3a;
+    --paper:#f6fbfd;
+    --card:#ffffff;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#0f1a22;
+      --card:#182631;
+      --ink:#eaf3f6;
+      --sky:#132631;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#0f1a22;
+    --card:#182631;
+    --ink:#eaf3f6;
+    --sky:#132631;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-padding-top: env(safe-area-inset-top,0px); height:100%;}
+  body{
+    margin:0;min-height:100%;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Tahoma','Segoe UI',system-ui,sans-serif;
+    line-height:1.55;
+  }
+  .wrap{max-width:800px;margin:0 auto;padding:26px 16px 60px;}
+  header{text-align:center;margin-bottom:20px;}
+  .eyebrow{
+    display:inline-block;background:var(--navy);color:#fff;
+    font-weight:800;padding:6px 16px;border-radius:999px;
+    font-size:0.82rem;margin-bottom:10px;
+  }
+  h1{font-family:'Georgia',serif;font-size:1.5rem;margin:0 0 6px;color:var(--navy);}
+  p.sub{margin:0;font-size:0.92rem;opacity:0.75;max-width:540px;margin-inline:auto;}
+  .playall{display:flex;justify-content:center;gap:10px;margin:20px 0 10px;flex-wrap:wrap;}
+  .playall button{
+    background:var(--navy);color:#fff;border:none;border-radius:12px;
+    padding:13px 22px;font-size:0.95rem;font-weight:700;font-family:inherit;
+    cursor:pointer;display:flex;align-items:center;gap:8px;
+    box-shadow:0 4px 14px rgba(30,58,110,0.25);
+  }
+  .playall .stop{background:transparent;color:var(--navy);box-shadow:none;border:1.5px solid var(--navy);}
+  h2.section{
+    font-family:'Georgia',serif;font-size:1.1rem;color:var(--navy);
+    text-align:center;margin:32px 0 14px;
+  }
+  .words{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  @media (max-width:460px){ .words{grid-template-columns:1fr;} }
+  .wcard{
+    background:var(--card);border-radius:14px;padding:11px 14px;
+    display:flex;align-items:center;gap:10px;
+    box-shadow:0 2px 8px rgba(0,0,0,0.06);
+    border-inline-start:5px solid var(--c);
+  }
+  .wcard .info{flex:1;min-width:0;}
+  .wcard .en{font-weight:800;font-size:1rem;direction:ltr;display:block;color:var(--c);}
+  .wcard .ar{font-size:0.85rem;opacity:0.8;}
+  .playbtn{
+    flex:0 0 auto;width:36px;height:36px;border-radius:50%;border:none;
+    background:var(--sky);color:var(--c);font-size:0.95rem;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .playbtn.playing{background:var(--c);color:#fff;}
+  .items{margin-top:10px;}
+  .it-card{
+    background:var(--card);border-radius:16px;padding:14px 16px;margin-bottom:12px;
+    box-shadow:0 2px 10px rgba(0,0,0,0.06);
+    display:flex;gap:12px;align-items:flex-start;
+    border-inline-start:6px solid var(--c);
+  }
+  .it-num{
+    flex:0 0 auto;width:32px;height:32px;border-radius:50%;background:var(--c);
+    color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;
+  }
+  .it-body{flex:1;min-width:0;}
+  .tag{
+    display:inline-block;font-size:0.72rem;font-weight:800;color:var(--c);
+    background:color-mix(in srgb, var(--c) 20%, transparent);
+    padding:2px 9px;border-radius:999px;margin-bottom:6px;direction:ltr;
+  }
+  .it-en{direction:ltr;text-align:left;font-size:0.96rem;}
+  .it-ar{font-size:0.88rem;opacity:0.85;margin-top:6px;}
+  .it-play{
+    flex:0 0 auto;width:38px;height:38px;border-radius:50%;border:none;
+    background:var(--sky);color:var(--c);font-size:1rem;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .note{
+    background:var(--sky);border-radius:12px;padding:12px 16px;font-size:0.85rem;
+    margin-top:26px;text-align:center;
+  }
+  footer{text-align:center;margin-top:30px;font-size:0.8rem;opacity:0.6;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <span class="eyebrow">Unit 1 · Exercise 2</span>
+    <h1>Read and Choose a Section — استمع وتدرّب</h1>
+    <p class="sub">اضغط 🔊 بجانب كل كلمة أو جملة لتسمعها بالإنجليزية، أو استخدم «تشغيل الكل» للاستماع لكل مفردات صندوق الكلمات.</p>
+  </header>
+
+  <div class="playall">
+    <button id="playAllBtn">🔊 تشغيل كل الكلمات</button>
+    <button id="stopBtn" class="stop">⏹ إيقاف</button>
+  </div>
+
+  <h2 class="section">Word Box</h2>
+  <div class="words" id="words"></div>
+
+  <h2 class="section">Read and Choose a Section</h2>
+  <div class="items" id="items"></div>
+
+  <div class="note">📌 هذه صفحة تفاعلية تُشغّل الصوت من المتصفح مباشرة. ارفعها على نفس مستودع GitHub Pages عشان تسوي لها باركود جديد.</div>
+
+  <footer>Dhuha Karim</footer>
+</div>
+
+<script>
+const words = [
+  {w:"joke",ar:"نكتة",c:"var(--pink)"},
+  {w:"letter",ar:"رسالة",c:"var(--purple)"},
+  {w:"poetry",ar:"شعر",c:"var(--green)"},
+  {w:"problem page",ar:"صفحة المشاكل",c:"var(--peach)"},
+  {w:"puzzle",ar:"لغز / أحجية",c:"var(--gold)"},
+  {w:"school news",ar:"أخبار المدرسة",c:"var(--teal)"},
+  {w:"sports report",ar:"تقرير رياضي",c:"var(--lav)"},
+  {w:"town event",ar:"فعالية في المدينة",c:"var(--gold)"}
+];
+
+const items = [
+  {n:"a",tag:"problem page",en:"My friend isn't talking to me. I don't know why.",ar:"صديقتي لا تتحدث معي. لا أعرف لماذا.",c:"var(--pink)"},
+  {n:"b",tag:"sports report",en:"Rafel scored just before half-time.",ar:"سجل رافل هدفًا مباشرة قبل نهاية الشوط الأول.",c:"var(--lav)"},
+  {n:"c",tag:"town event",en:"Come and join the fun in the main square.",ar:"تعال وانضم إلى المرح في الساحة الرئيسية.",c:"var(--gold)"},
+  {n:"d",tag:"school news",en:"Our new English teacher, Mr Smith, starts at the school next month.",ar:"مدرس اللغة الإنجليزية الجديد، السيد سميث، يبدأ في المدرسة الشهر القادم.",c:"var(--teal)"},
+  {n:"e",tag:"puzzle",en:"The door and the windows were locked. How did she escape?",ar:"الباب والنوافذ كانت مغلقة. كيف استطاعت أن تهرب؟",c:"var(--gold)"},
+  {n:"f",tag:"joke",en:"Knock, knock. Who's there? Boo. Boo who? Why are you crying?",ar:"طرق، طرق. من هناك؟ بو. بو من؟ لماذا تبكي؟",c:"var(--pink)"},
+  {n:"g",tag:"letter",en:"I saw a cat sitting on the mat. Underneath was a mouse that was all flat.",ar:"رأيت قطة جالسة على السجادة. تحتها كان فأرًا مسطحًا تمامًا.",c:"var(--purple)"},
+  {n:"h",tag:"letter",en:"Dear Editor. I'm writing to tell you about...",ar:"عزيزي المحرر، أكتب لأخبرك عن...",c:"var(--purple)"}
+];
+
+const wordsEl = document.getElementById('words');
+words.forEach(item=>{
+  const card = document.createElement('div');
+  card.className = 'wcard';
+  card.style.setProperty('--c', item.c);
+  card.innerHTML = `
+    <div class="info">
+      <span class="en">${item.w}</span>
+      <span class="ar">${item.ar}</span>
+    </div>
+    <button class="playbtn" aria-label="play">▶</button>
+  `;
+  card.querySelector('.playbtn').addEventListener('click', (e)=>speakOne(item.w, e.currentTarget));
+  wordsEl.appendChild(card);
+});
+
+const itemsEl = document.getElementById('items');
+items.forEach(item=>{
+  const card = document.createElement('div');
+  card.className = 'it-card';
+  card.style.setProperty('--c', item.c);
+  card.innerHTML = `
+    <div class="it-num">${item.n}</div>
+    <div class="it-body">
+      <span class="tag">${item.tag}</span>
+      <div class="it-en">"${item.en}"</div>
+      <div class="it-ar">${item.ar}</div>
+    </div>
+    <button class="it-play" aria-label="play">▶</button>
+  `;
+  card.querySelector('.it-play').addEventListener('click', (e)=>speakOne(item.en, e.currentTarget));
+  itemsEl.appendChild(card);
+});
+
+let synth = window.speechSynthesis;
+let activeBtn = null;
+function clearActive(){
+  if(activeBtn){ activeBtn.classList.remove('playing'); activeBtn.textContent='▶'; }
+  activeBtn = null;
+}
+function speakOne(text, btn){
+  try{
+    synth.cancel();
+    clearActive();
+    activeBtn = btn;
+    btn.classList.add('playing');
+    btn.textContent = '⏸';
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = 'en-US';
+    u.rate = 0.92;
+    u.onend = clearActive;
+    synth.speak(u);
+  }catch(e){
+    console.error(e);
+    alert('التشغيل الصوتي غير مدعوم في هذا المتصفح.');
+  }
+}
+
+document.getElementById('playAllBtn').addEventListener('click', ()=>{
+  try{
+    synth.cancel();
+    clearActive();
+    words.forEach(item=>{
+      const u = new SpeechSynthesisUtterance(item.w);
+      u.lang = 'en-US'; u.rate = 0.92;
+      synth.speak(u);
+    });
+  }catch(e){ console.error(e); }
+});
+document.getElementById('stopBtn').addEventListener('click', ()=>{
+  synth.cancel();
+  clearActive();
+});
+</script>
+</body>
+</html>
