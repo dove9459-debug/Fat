@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sections - استمع للمفردات</title>
+<style>
+  :root{
+    --dark:#1c1c1c;
+    --mint:#a8e6d5;
+    --pink:#f5b8c4;
+    --lav:#c9b8f0;
+    --peach:#f7dba8;
+    --sky:#eef7f4;
+    --ink:#1b2b3a;
+    --paper:#f6fbfa;
+    --card:#ffffff;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#0f1614;
+      --card:#182420;
+      --ink:#eaf5f1;
+      --sky:#152420;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#0f1614;
+    --card:#182420;
+    --ink:#eaf5f1;
+    --sky:#152420;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-padding-top: env(safe-area-inset-top,0px); height:100%;}
+  body{
+    margin:0;min-height:100%;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Tahoma','Segoe UI',system-ui,sans-serif;
+    line-height:1.55;
+  }
+  .wrap{max-width:760px;margin:0 auto;padding:26px 16px 60px;}
+  header{text-align:center;margin-bottom:22px;}
+  .eyebrow{
+    display:inline-block;background:var(--dark);color:#fff;
+    font-weight:800;padding:6px 16px;border-radius:999px;
+    font-size:0.82rem;margin-bottom:10px;
+  }
+  h1{font-family:'Georgia',serif;font-size:1.55rem;margin:0 0 6px;color:var(--dark);}
+  @media (prefers-color-scheme: dark){ h1{color:var(--ink);} }
+  p.sub{margin:0;font-size:0.92rem;opacity:0.75;max-width:540px;margin-inline:auto;}
+  .playall{display:flex;justify-content:center;gap:10px;margin:20px 0 10px;flex-wrap:wrap;}
+  .playall button{
+    background:var(--dark);color:#fff;border:none;border-radius:12px;
+    padding:13px 22px;font-size:0.95rem;font-weight:700;font-family:inherit;
+    cursor:pointer;display:flex;align-items:center;gap:8px;
+    box-shadow:0 4px 14px rgba(0,0,0,0.2);
+  }
+  .playall .stop{background:transparent;color:var(--dark);box-shadow:none;border:1.5px solid var(--dark);}
+  @media (prefers-color-scheme: dark){ .playall .stop{color:#fff;border-color:#fff;} }
+  .words{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:26px;}
+  @media (max-width:460px){ .words{grid-template-columns:1fr;} }
+  .wcard{
+    background:var(--c);border-radius:18px;padding:18px 16px;
+    display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;
+    box-shadow:0 3px 10px rgba(0,0,0,0.08);
+  }
+  .wcard .emoji{font-size:2rem;line-height:1;}
+  .wcard .en{font-weight:800;font-size:1.05rem;direction:ltr;color:#20342c;margin-top:4px;}
+  .wcard .ar{font-size:0.9rem;color:#3a4d44;opacity:0.85;}
+  .playbtn{
+    margin-top:8px;width:38px;height:38px;border-radius:50%;border:none;
+    background:rgba(255,255,255,0.65);color:#20342c;font-size:1rem;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .playbtn.playing{background:#20342c;color:#fff;}
+  .note{
+    background:var(--sky);border-radius:12px;padding:12px 16px;font-size:0.85rem;
+    margin-top:26px;text-align:center;
+  }
+  footer{text-align:center;margin-top:30px;font-size:0.8rem;opacity:0.6;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <span class="eyebrow">📰 Magazine Sections</span>
+    <h1>أقسام المجلة — استمع للمفردات</h1>
+    <p class="sub">اضغط 🔊 بجانب كل كلمة لتسمع نطقها بالإنجليزية، أو استخدم «تشغيل الكل» للاستماع لكل الأقسام.</p>
+  </header>
+
+  <div class="playall">
+    <button id="playAllBtn">🔊 تشغيل الكل</button>
+    <button id="stopBtn" class="stop">⏹ إيقاف</button>
+  </div>
+
+  <div class="words" id="words"></div>
+
+  <div class="note">📌 هذه صفحة تفاعلية تُشغّل الصوت من المتصفح مباشرة. ارفعها على مستودع GitHub Pages نفسه عشان تسوي لها باركود جديد.</div>
+
+  <footer>Dhuha Karim</footer>
+</div>
+
+<script>
+const words = [
+  {w:"Stories",ar:"قصص",e:"📖",c:"var(--mint)"},
+  {w:"Puzzles",ar:"ألغاز",e:"🧩",c:"var(--pink)"},
+  {w:"Town events",ar:"فعاليات المدينة",e:"🏙️",c:"var(--lav)"},
+  {w:"School news",ar:"أخبار المدرسة",e:"📰",c:"var(--peach)"},
+  {w:"Poetry",ar:"شعر",e:"✍️",c:"var(--mint)"},
+  {w:"Sports reports",ar:"تقارير رياضية",e:"🏆",c:"var(--pink)"},
+  {w:"Jokes",ar:"نكت",e:"😄",c:"var(--lav)"},
+  {w:"Cartoons",ar:"كاريكاتير",e:"🎨",c:"var(--peach)"},
+  {w:"Problem page",ar:"صفحة المشاكل",e:"💬",c:"var(--pink)"},
+  {w:"Letters",ar:"رسائل",e:"✉️",c:"var(--pink)"},
+  {w:"Interviews",ar:"مقابلات",e:"🎤",c:"var(--mint)"}
+];
+
+const wordsEl = document.getElementById('words');
+words.forEach(item=>{
+  const card = document.createElement('div');
+  card.className = 'wcard';
+  card.style.setProperty('--c', item.c);
+  card.innerHTML = `
+    <div class="emoji">${item.e}</div>
+    <div class="en">${item.w}</div>
+    <div class="ar">${item.ar}</div>
+    <button class="playbtn" aria-label="play">▶</button>
+  `;
+  card.querySelector('.playbtn').addEventListener('click', (e)=>speakOne(item.w, e.currentTarget));
+  wordsEl.appendChild(card);
+});
+
+let synth = window.speechSynthesis;
+let activeBtn = null;
+function clearActive(){
+  if(activeBtn){ activeBtn.classList.remove('playing'); activeBtn.textContent='▶'; }
+  activeBtn = null;
+}
+function speakOne(text, btn){
+  try{
+    synth.cancel();
+    clearActive();
+    activeBtn = btn;
+    btn.classList.add('playing');
+    btn.textContent = '⏸';
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = 'en-US';
+    u.rate = 0.9;
+    u.onend = clearActive;
+    synth.speak(u);
+  }catch(e){
+    console.error(e);
+    alert('التشغيل الصوتي غير مدعوم في هذا المتصفح.');
+  }
+}
+
+document.getElementById('playAllBtn').addEventListener('click', ()=>{
+  try{
+    synth.cancel();
+    clearActive();
+    words.forEach(item=>{
+      const u = new SpeechSynthesisUtterance(item.w);
+      u.lang = 'en-US'; u.rate = 0.9;
+      synth.speak(u);
+    });
+  }catch(e){ console.error(e); }
+});
+document.getElementById('stopBtn').addEventListener('click', ()=>{
+  synth.cancel();
+  clearActive();
+});
+</script>
+</body>
+</html>
