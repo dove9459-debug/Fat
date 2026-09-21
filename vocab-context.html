@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Vocabulary in Context - استمع وتدرّب</title>
+<style>
+  :root{
+    --navy:#1b2f57;
+    --yellow:#f4c93a;
+    --pink:#f288a8;
+    --teal:#3fb8b0;
+    --purple:#9b7fe0;
+    --green:#6fcf6f;
+    --sky:#e9f7fb;
+    --ink:#1b2b3a;
+    --paper:#f4fbfd;
+    --card:#ffffff;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#0f1a22;
+      --card:#182631;
+      --ink:#eaf3f6;
+      --sky:#132631;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#0f1a22;
+    --card:#182631;
+    --ink:#eaf3f6;
+    --sky:#132631;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-padding-top: env(safe-area-inset-top,0px); height:100%;}
+  body{
+    margin:0;min-height:100%;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Tahoma','Segoe UI',system-ui,sans-serif;
+    line-height:1.55;
+  }
+  .wrap{max-width:760px;margin:0 auto;padding:26px 16px 60px;}
+  header{text-align:center;margin-bottom:20px;}
+  .eyebrow{
+    display:inline-block;background:var(--navy);color:#fff;
+    font-weight:800;padding:6px 16px;border-radius:999px;
+    font-size:0.82rem;margin-bottom:10px;
+  }
+  h1{
+    font-family:'Georgia',serif;font-size:1.55rem;margin:0 0 6px;color:var(--navy);
+  }
+  p.sub{margin:0;font-size:0.92rem;opacity:0.75;max-width:520px;margin-inline:auto;}
+  .playall{display:flex;justify-content:center;gap:10px;margin:20px 0 10px;flex-wrap:wrap;}
+  .playall button{
+    background:var(--navy);color:#fff;border:none;border-radius:12px;
+    padding:13px 22px;font-size:0.95rem;font-weight:700;font-family:inherit;
+    cursor:pointer;display:flex;align-items:center;gap:8px;
+    box-shadow:0 4px 14px rgba(27,47,87,0.25);
+  }
+  .playall .stop{background:transparent;color:var(--navy);box-shadow:none;border:1.5px solid var(--navy);}
+  h2.section{
+    font-family:'Georgia',serif;font-size:1.15rem;color:var(--navy);
+    text-align:center;margin:34px 0 14px;
+  }
+  .words{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  @media (max-width:420px){ .words{grid-template-columns:1fr;} }
+  .wcard{
+    background:var(--card);border-radius:14px;padding:12px 14px;
+    display:flex;align-items:center;gap:10px;
+    box-shadow:0 2px 8px rgba(0,0,0,0.06);
+    border-inline-start:5px solid var(--c);
+  }
+  .wcard .info{flex:1;min-width:0;}
+  .wcard .en{font-weight:800;font-size:1.05rem;direction:ltr;display:block;color:var(--c);}
+  .wcard .ar{font-size:0.88rem;opacity:0.8;}
+  .playbtn{
+    flex:0 0 auto;width:38px;height:38px;border-radius:50%;border:none;
+    background:var(--sky);color:var(--c);font-size:1rem;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .playbtn.playing{background:var(--c);color:#fff;}
+  .exercise{margin-top:10px;}
+  .ex-card{
+    background:var(--card);border-radius:16px;padding:14px 16px;margin-bottom:12px;
+    box-shadow:0 2px 10px rgba(0,0,0,0.06);
+    display:flex;gap:12px;align-items:flex-start;
+    border-inline-start:6px solid var(--c);
+  }
+  .ex-num{
+    flex:0 0 auto;width:30px;height:30px;border-radius:50%;background:var(--c);
+    color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;
+  }
+  .ex-body{flex:1;min-width:0;}
+  .ex-en{direction:ltr;text-align:left;font-size:0.98rem;}
+  .ex-en .answer{
+    background:color-mix(in srgb, var(--c) 22%, transparent);
+    color:var(--c);font-weight:800;padding:1px 6px;border-radius:6px;
+  }
+  .ex-ar{font-size:0.9rem;opacity:0.85;margin-top:6px;}
+  .ex-play{
+    flex:0 0 auto;width:38px;height:38px;border-radius:50%;border:none;
+    background:var(--sky);color:var(--c);font-size:1rem;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .note{
+    background:var(--sky);border-radius:12px;padding:12px 16px;font-size:0.85rem;
+    margin-top:26px;text-align:center;
+  }
+  footer{text-align:center;margin-top:30px;font-size:0.8rem;opacity:0.6;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <span class="eyebrow">Exercise 1 · Vocabulary in Context</span>
+    <h1>Complete the Sentences — استمع وتدرّب</h1>
+    <p class="sub">اضغط 🔊 بجانب كل كلمة أو جملة لتسمعها بالإنجليزية، أو استخدم «تشغيل الكل» للاستماع لكل المفردات.</p>
+  </header>
+
+  <div class="playall">
+    <button id="playAllBtn">🔊 تشغيل كل الكلمات</button>
+    <button id="stopBtn" class="stop">⏹ إيقاف</button>
+  </div>
+
+  <h2 class="section">Word Box</h2>
+  <div class="words" id="words"></div>
+
+  <h2 class="section">Answers &amp; Translation</h2>
+  <div class="exercise" id="exercise"></div>
+
+  <div class="note">📌 هذه صفحة تفاعلية تُشغّل الصوت من المتصفح مباشرة. بعد رفعها على GitHub Pages، حوّل رابطها إلى باركود وشاركه مع الطلاب.</div>
+
+  <footer>Dhuha Karim</footer>
+</div>
+
+<script>
+const words = [
+  {w:"article",ar:"مقال",c:"var(--pink)"},
+  {w:"cartoon",ar:"رسوم متحركة",c:"var(--purple)"},
+  {w:"joke",ar:"نكتة",c:"var(--green)"},
+  {w:"poetry",ar:"شعر",c:"var(--teal)"},
+  {w:"report",ar:"تقرير",c:"var(--pink)"},
+  {w:"team",ar:"فريق",c:"var(--teal)"},
+  {w:"well-known",ar:"معروف",c:"var(--purple)"}
+];
+
+const exercises = [
+  {n:"a",before:"Our teacher told us a ",answer:"joke",after:" this morning, and we all laughed loudly.",ar:"أخبرنا مدرستنا نكتة هذا الصباح، فضحكنا جميعًا بصوت عالٍ.",c:"var(--pink)"},
+  {n:"b",before:"Noora has written an ",answer:"article",after:" for the school magazine.",ar:"كتبت نورا مقالًا لمجلة المدرسة.",c:"var(--purple)"},
+  {n:"c",before:"Our football ",answer:"team",after:" didn't play well in the match yesterday.",ar:"لم يلعب فريق كرة القدم لدينا جيدًا في المباراة أمس.",c:"var(--teal)"},
+  {n:"d",before:"We need to interview a ",answer:"well-known",after:" person in our town. Can you suggest someone?",ar:"نحتاج إلى إجراء مقابلة مع شخص معروف في مدينتنا. هل يمكنك أن تقترح شخصًا؟",c:"var(--navy)"},
+  {n:"e",before:"I don't like writing stories, but I love writing ",answer:"poetry",after:".",ar:"لا أحب كتابة القصص، لكني أحب كتابة الشعر.",c:"var(--green)"}
+];
+
+const wordsEl = document.getElementById('words');
+words.forEach(item=>{
+  const card = document.createElement('div');
+  card.className = 'wcard';
+  card.style.setProperty('--c', item.c);
+  card.innerHTML = `
+    <div class="info">
+      <span class="en">${item.w}</span>
+      <span class="ar">${item.ar}</span>
+    </div>
+    <button class="playbtn" aria-label="play">▶</button>
+  `;
+  card.querySelector('.playbtn').addEventListener('click', (e)=>speakOne(item.w, e.currentTarget));
+  wordsEl.appendChild(card);
+});
+
+const exEl = document.getElementById('exercise');
+exercises.forEach(item=>{
+  const card = document.createElement('div');
+  card.className = 'ex-card';
+  card.style.setProperty('--c', item.c);
+  const fullText = item.before + item.answer + item.after;
+  card.innerHTML = `
+    <div class="ex-num">${item.n}</div>
+    <div class="ex-body">
+      <div class="ex-en">${item.before}<span class="answer">${item.answer}</span>${item.after}</div>
+      <div class="ex-ar">${item.ar}</div>
+    </div>
+    <button class="ex-play" aria-label="play">▶</button>
+  `;
+  card.querySelector('.ex-play').addEventListener('click', (e)=>speakOne(fullText, e.currentTarget));
+  exEl.appendChild(card);
+});
+
+let synth = window.speechSynthesis;
+let activeBtn = null;
+function clearActive(){
+  if(activeBtn){ activeBtn.classList.remove('playing'); activeBtn.textContent='▶'; }
+  activeBtn = null;
+}
+function speakOne(text, btn){
+  try{
+    synth.cancel();
+    clearActive();
+    activeBtn = btn;
+    btn.classList.add('playing');
+    btn.textContent = '⏸';
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = 'en-US';
+    u.rate = 0.92;
+    u.onend = clearActive;
+    synth.speak(u);
+  }catch(e){
+    console.error(e);
+    alert('التشغيل الصوتي غير مدعوم في هذا المتصفح.');
+  }
+}
+
+document.getElementById('playAllBtn').addEventListener('click', ()=>{
+  try{
+    synth.cancel();
+    clearActive();
+    words.forEach(item=>{
+      const u = new SpeechSynthesisUtterance(item.w);
+      u.lang = 'en-US'; u.rate = 0.92;
+      synth.speak(u);
+    });
+  }catch(e){ console.error(e); }
+});
+document.getElementById('stopBtn').addEventListener('click', ()=>{
+  synth.cancel();
+  clearActive();
+});
+</script>
+</body>
+</html>
