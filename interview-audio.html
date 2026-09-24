@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lesson 3: An Interview — Mr James</title>
+<style>
+  :root {
+    --bg: #fdf6e3;
+    --card-bg: #ffffff;
+    --accent: #1c3d5a;
+    --accent-2: #e6a817;
+    --text: #22303f;
+    --muted: #5b6b7a;
+    --pill-bg: #eaf2fb;
+    --btn-bg: #1c3d5a;
+    --btn-text: #ffffff;
+    --btn-active: #e6a817;
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #10161f;
+      --card-bg: #1a2330;
+      --accent: #f2c14e;
+      --accent-2: #f2c14e;
+      --text: #eef2f7;
+      --muted: #a9b6c4;
+      --pill-bg: #223047;
+      --btn-bg: #f2c14e;
+      --btn-text: #10161f;
+      --btn-active: #ffffff;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #10161f;
+    --card-bg: #1a2330;
+    --accent: #f2c14e;
+    --accent-2: #f2c14e;
+    --text: #eef2f7;
+    --muted: #a9b6c4;
+    --pill-bg: #223047;
+    --btn-bg: #f2c14e;
+    --btn-text: #10161f;
+    --btn-active: #ffffff;
+  }
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); height: 100%; }
+  body {
+    height: 100%;
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 24px 16px 40px;
+  }
+  .wrap { max-width: 640px; width: 100%; }
+  h1 {
+    font-size: 1.3rem;
+    color: var(--accent);
+    text-align: center;
+    margin-bottom: 4px;
+  }
+  .subtitle {
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+  }
+  .controls {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+  }
+  button {
+    border: none;
+    border-radius: 999px;
+    padding: 12px 22px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    background: var(--btn-bg);
+    color: var(--btn-text);
+    transition: transform 0.15s ease, opacity 0.15s ease;
+  }
+  button:active { transform: scale(0.96); }
+  button:disabled { opacity: 0.5; cursor: not-allowed; }
+  .rate-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 20px;
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+  input[type="range"] { width: 140px; }
+  .card {
+    background: var(--card-bg);
+    border-radius: 16px;
+    padding: 16px 18px;
+    margin-bottom: 14px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+  .card.active {
+    outline: 2px solid var(--accent-2);
+  }
+  .card .label {
+    display: inline-block;
+    background: var(--pill-bg);
+    color: var(--accent);
+    font-weight: 700;
+    border-radius: 8px;
+    padding: 2px 10px;
+    font-size: 0.8rem;
+    margin-bottom: 8px;
+  }
+  .q { font-weight: 700; margin: 4px 0; }
+  .a { color: var(--muted); }
+  .status {
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.85rem;
+    min-height: 18px;
+    margin-bottom: 10px;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Lesson 3: An Interview (Part A)</h1>
+  <p class="subtitle">Mr James — Chef · British English narration</p>
+
+  <div class="controls">
+    <button id="playBtn">▶ Play</button>
+    <button id="pauseBtn" disabled>⏸ Pause</button>
+    <button id="stopBtn" disabled>■ Stop</button>
+  </div>
+
+  <div class="rate-row">
+    <span>Slower</span>
+    <input type="range" id="rateSlider" min="0.5" max="1" step="0.05" value="0.75">
+    <span>Faster</span>
+  </div>
+
+  <div class="status" id="status">Tap Play to start listening.</div>
+
+  <div class="card" id="card-intro">
+    <span class="label">Profile</span>
+    <p class="a">Name: Mr James. Occupation: Chef. Famous for his love of cooking and his work in the café.</p>
+  </div>
+
+  <div class="card" id="card-a">
+    <span class="label">a</span>
+    <p class="q">How long has Mr James worked in the café?</p>
+    <p class="a">He has worked in the café for ten years.</p>
+  </div>
+
+  <div class="card" id="card-b">
+    <span class="label">b</span>
+    <p class="q">How long has he lived in Ashby?</p>
+    <p class="a">He has lived in Ashby since he was born.</p>
+  </div>
+
+  <div class="card" id="card-c">
+    <span class="label">c</span>
+    <p class="q">What does he dislike doing?</p>
+    <p class="a">He dislikes cleaning up, washing-up, and gardening.</p>
+  </div>
+
+  <div class="card" id="card-d">
+    <span class="label">d</span>
+    <p class="q">Why does he like the programme A Taste of the Sea?</p>
+    <p class="a">Because he always learns something.</p>
+  </div>
+
+  <div class="card" id="card-e">
+    <span class="label">e</span>
+    <p class="q">Why does he think a ring road would help the town?</p>
+    <p class="a">He thinks a ring road would help the town because it would reduce traffic and make travelling easier.</p>
+  </div>
+</div>
+
+<script>
+  const segments = [
+    { id: "card-intro", text: "Profile. Name: Mister James. Occupation: Chef. Famous for his love of cooking, and his work in the café." },
+    { id: "card-a", text: "Question a. How long has Mister James worked in the café? Answer: He has worked in the café for ten years." },
+    { id: "card-b", text: "Question b. How long has he lived in Ashby? Answer: He has lived in Ashby since he was born." },
+    { id: "card-c", text: "Question c. What does he dislike doing? Answer: He dislikes cleaning up, washing-up, and gardening." },
+    { id: "card-d", text: "Question d. Why does he like the programme A Taste of the Sea? Answer: Because he always learns something." },
+    { id: "card-e", text: "Question e. Why does he think a ring road would help the town? Answer: He thinks a ring road would help the town, because it would reduce traffic and make travelling easier." }
+  ];
+
+  const playBtn = document.getElementById('playBtn');
+  const pauseBtn = document.getElementById('pauseBtn');
+  const stopBtn = document.getElementById('stopBtn');
+  const statusEl = document.getElementById('status');
+  const rateSlider = document.getElementById('rateSlider');
+
+  let voices = [];
+  let chosenVoice = null;
+  let currentIndex = 0;
+  let isPaused = false;
+
+  function pickBritishVoice() {
+    voices = window.speechSynthesis.getVoices();
+    chosenVoice =
+      voices.find(v => v.lang === 'en-GB' && /female|Female|Kate|Serena|Google UK English Female/i.test(v.name)) ||
+      voices.find(v => v.lang === 'en-GB') ||
+      voices.find(v => v.lang && v.lang.startsWith('en')) ||
+      voices[0] || null;
+  }
+
+  if ('speechSynthesis' in window) {
+    window.speechSynthesis.onvoiceschanged = pickBritishVoice;
+    pickBritishVoice();
+  } else {
+    statusEl.textContent = "Sorry, this browser doesn't support text-to-speech.";
+    playBtn.disabled = true;
+  }
+
+  function clearActive() {
+    segments.forEach(s => document.getElementById(s.id).classList.remove('active'));
+  }
+
+  function speakSegment(index) {
+    if (index >= segments.length) {
+      statusEl.textContent = "Finished. Tap Play to listen again.";
+      clearActive();
+      playBtn.disabled = false;
+      pauseBtn.disabled = true;
+      stopBtn.disabled = true;
+      currentIndex = 0;
+      return;
+    }
+    currentIndex = index;
+    clearActive();
+    const seg = segments[index];
+    document.getElementById(seg.id).classList.add('active');
+    document.getElementById(seg.id).scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+    const utter = new SpeechSynthesisUtterance(seg.text);
+    if (chosenVoice) utter.voice = chosenVoice;
+    utter.lang = 'en-GB';
+    utter.rate = parseFloat(rateSlider.value);
+    utter.pitch = 1;
+
+    utter.onend = () => {
+      if (!isPaused) speakSegment(index + 1);
+    };
+    utter.onerror = () => {
+      statusEl.textContent = "Playback error. Tap Play to try again.";
+    };
+
+    statusEl.textContent = "Playing part " + (index + 1) + " of " + segments.length + "…";
+    window.speechSynthesis.speak(utter);
+  }
+
+  playBtn.addEventListener('click', () => {
+    try {
+      window.speechSynthesis.cancel();
+      isPaused = false;
+      playBtn.disabled = true;
+      pauseBtn.disabled = false;
+      stopBtn.disabled = false;
+      speakSegment(currentIndex);
+    } catch (e) {
+      statusEl.textContent = "Couldn't start playback.";
+    }
+  });
+
+  pauseBtn.addEventListener('click', () => {
+    if (window.speechSynthesis.speaking && !window.speechSynthesis.paused) {
+      window.speechSynthesis.pause();
+      isPaused = true;
+      statusEl.textContent = "Paused.";
+      pauseBtn.textContent = "▶ Resume";
+    } else if (window.speechSynthesis.paused) {
+      window.speechSynthesis.resume();
+      isPaused = false;
+      statusEl.textContent = "Playing part " + (currentIndex + 1) + " of " + segments.length + "…";
+      pauseBtn.textContent = "⏸ Pause";
+    }
+  });
+
+  stopBtn.addEventListener('click', () => {
+    window.speechSynthesis.cancel();
+    isPaused = false;
+    currentIndex = 0;
+    clearActive();
+    statusEl.textContent = "Stopped. Tap Play to start again.";
+    playBtn.disabled = false;
+    pauseBtn.disabled = true;
+    stopBtn.disabled = true;
+    pauseBtn.textContent = "⏸ Pause";
+  });
+</script>
+</body>
+</html>
