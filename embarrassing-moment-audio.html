@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Unit 1: The Embarrassing Moments</title>
+<style>
+  :root {
+    --bg: #fdf3f7;
+    --card-bg: #ffffff;
+    --accent: #8e3b76;
+    --accent-2: #e6a817;
+    --text: #2f2436;
+    --muted: #7a6b7f;
+    --pill-bg: #fbe8f2;
+    --btn-bg: #8e3b76;
+    --btn-text: #ffffff;
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #1c1420;
+      --card-bg: #2a1f2b;
+      --accent: #f0b6de;
+      --text: #f2ecf3;
+      --muted: #c6b6c8;
+      --pill-bg: #3a2a3a;
+      --btn-bg: #f0b6de;
+      --btn-text: #1c1420;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #1c1420;
+    --card-bg: #2a1f2b;
+    --accent: #f0b6de;
+    --text: #f2ecf3;
+    --muted: #c6b6c8;
+    --pill-bg: #3a2a3a;
+    --btn-bg: #f0b6de;
+    --btn-text: #1c1420;
+  }
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); height: 100%; }
+  body {
+    height: 100%;
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 24px 16px 40px;
+  }
+  .wrap { max-width: 640px; width: 100%; }
+  h1 { font-size: 1.25rem; color: var(--accent); text-align: center; margin-bottom: 2px; }
+  .subtitle { text-align: center; color: var(--muted); font-size: 0.9rem; margin-bottom: 20px; }
+  .controls { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 22px; }
+  button {
+    border: none; border-radius: 999px; padding: 12px 22px; font-size: 1rem; font-weight: 600;
+    cursor: pointer; background: var(--btn-bg); color: var(--btn-text);
+  }
+  button:active { transform: scale(0.96); }
+  button:disabled { opacity: 0.5; cursor: not-allowed; }
+  .rate-row { display: flex; align-items: center; gap: 10px; justify-content: center; margin-bottom: 20px; color: var(--muted); font-size: 0.85rem; }
+  input[type="range"] { width: 140px; }
+  .card { background: var(--card-bg); border-radius: 16px; padding: 14px 18px; margin-bottom: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+  .card.active { outline: 2px solid var(--accent-2); }
+  .card p { margin: 0; line-height: 1.5; }
+  .status { text-align: center; color: var(--muted); font-size: 0.85rem; min-height: 18px; margin-bottom: 10px; }
+  .credit { text-align: center; color: var(--muted); font-size: 0.8rem; margin-top: 18px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Unit 1: The Embarrassing Moments</h1>
+  <p class="subtitle">Write about the most embarrassing moment — British English narration</p>
+
+  <div class="controls">
+    <button id="playBtn">▶ Play</button>
+    <button id="pauseBtn" disabled>⏸ Pause</button>
+    <button id="stopBtn" disabled>■ Stop</button>
+  </div>
+
+  <div class="rate-row">
+    <span>Slower</span>
+    <input type="range" id="rateSlider" min="0.5" max="1" step="0.05" value="0.75">
+    <span>Faster</span>
+  </div>
+
+  <div class="status" id="status">Tap Play to start listening.</div>
+
+  <div class="card" id="s0"><p>Last week, my mum and I were shopping in the town.</p></div>
+  <div class="card" id="s1"><p>We wanted to buy a present for my brother's birthday.</p></div>
+  <div class="card" id="s2"><p>Suddenly, I turned around, but I couldn't find my mother.</p></div>
+  <div class="card" id="s3"><p>I shouted to her loudly. All the people looked at me.</p></div>
+  <div class="card" id="s4"><p>I felt embarrassed. Suddenly, my mother came to me.</p></div>
+  <div class="card" id="s5"><p>I had lost her. I felt so embarrassed and upset.</p></div>
+  <div class="card" id="s6"><p>I wished I hadn't turned around. I hugged her tightly, and we went back to the shop together.</p></div>
+
+  <p class="credit">Dhuha Karim</p>
+</div>
+
+<script>
+  const segments = [
+    { id: "s0", text: "Last week, my mum and I were shopping in the town." },
+    { id: "s1", text: "We wanted to buy a present for my brother's birthday." },
+    { id: "s2", text: "Suddenly, I turned around, but I couldn't find my mother." },
+    { id: "s3", text: "I shouted to her loudly. All the people looked at me." },
+    { id: "s4", text: "I felt embarrassed. Suddenly, my mother came to me." },
+    { id: "s5", text: "I had lost her. I felt so embarrassed and upset." },
+    { id: "s6", text: "I wished I hadn't turned around. I hugged her tightly, and we went back to the shop together." }
+  ];
+
+  const playBtn = document.getElementById('playBtn');
+  const pauseBtn = document.getElementById('pauseBtn');
+  const stopBtn = document.getElementById('stopBtn');
+  const statusEl = document.getElementById('status');
+  const rateSlider = document.getElementById('rateSlider');
+
+  let voices = [];
+  let chosenVoice = null;
+  let currentIndex = 0;
+  let isPaused = false;
+
+  function pickBritishVoice() {
+    voices = window.speechSynthesis.getVoices();
+    chosenVoice =
+      voices.find(v => v.lang === 'en-GB' && /female|Female|Kate|Serena|Google UK English Female/i.test(v.name)) ||
+      voices.find(v => v.lang === 'en-GB') ||
+      voices.find(v => v.lang && v.lang.startsWith('en')) ||
+      voices[0] || null;
+  }
+
+  if ('speechSynthesis' in window) {
+    window.speechSynthesis.onvoiceschanged = pickBritishVoice;
+    pickBritishVoice();
+  } else {
+    statusEl.textContent = "Sorry, this browser doesn't support text-to-speech.";
+    playBtn.disabled = true;
+  }
+
+  function clearActive() {
+    segments.forEach(s => document.getElementById(s.id).classList.remove('active'));
+  }
+
+  function speakSegment(index) {
+    if (index >= segments.length) {
+      statusEl.textContent = "Finished. Tap Play to listen again.";
+      clearActive();
+      playBtn.disabled = false;
+      pauseBtn.disabled = true;
+      stopBtn.disabled = true;
+      currentIndex = 0;
+      return;
+    }
+    currentIndex = index;
+    clearActive();
+    const seg = segments[index];
+    document.getElementById(seg.id).classList.add('active');
+    document.getElementById(seg.id).scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+    const utter = new SpeechSynthesisUtterance(seg.text);
+    if (chosenVoice) utter.voice = chosenVoice;
+    utter.lang = 'en-GB';
+    utter.rate = parseFloat(rateSlider.value);
+    utter.pitch = 1;
+
+    utter.onend = () => { if (!isPaused) speakSegment(index + 1); };
+    utter.onerror = () => { statusEl.textContent = "Playback error. Tap Play to try again."; };
+
+    statusEl.textContent = "Playing sentence " + (index + 1) + " of " + segments.length + "…";
+    window.speechSynthesis.speak(utter);
+  }
+
+  playBtn.addEventListener('click', () => {
+    try {
+      window.speechSynthesis.cancel();
+      isPaused = false;
+      playBtn.disabled = true;
+      pauseBtn.disabled = false;
+      stopBtn.disabled = false;
+      speakSegment(currentIndex);
+    } catch (e) {
+      statusEl.textContent = "Couldn't start playback.";
+    }
+  });
+
+  pauseBtn.addEventListener('click', () => {
+    if (window.speechSynthesis.speaking && !window.speechSynthesis.paused) {
+      window.speechSynthesis.pause();
+      isPaused = true;
+      statusEl.textContent = "Paused.";
+      pauseBtn.textContent = "▶ Resume";
+    } else if (window.speechSynthesis.paused) {
+      window.speechSynthesis.resume();
+      isPaused = false;
+      statusEl.textContent = "Playing sentence " + (currentIndex + 1) + " of " + segments.length + "…";
+      pauseBtn.textContent = "⏸ Pause";
+    }
+  });
+
+  stopBtn.addEventListener('click', () => {
+    window.speechSynthesis.cancel();
+    isPaused = false;
+    currentIndex = 0;
+    clearActive();
+    statusEl.textContent = "Stopped. Tap Play to start again.";
+    playBtn.disabled = false;
+    pauseBtn.disabled = true;
+    stopBtn.disabled = true;
+    pauseBtn.textContent = "⏸ Pause";
+  });
+</script>
+</body>
+</html>
