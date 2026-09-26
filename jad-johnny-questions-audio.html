@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Jad and Johnny — Questions and Answers</title>
+<style>
+  :root {
+    --bg: #fdf6e3;
+    --card-bg: #ffffff;
+    --accent: #1c3d5a;
+    --accent-2: #e6a817;
+    --text: #22303f;
+    --muted: #5b6b7a;
+    --pill-bg: #eaf2fb;
+    --btn-bg: #1c3d5a;
+    --btn-text: #ffffff;
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #10161f;
+      --card-bg: #1a2330;
+      --accent: #f2c14e;
+      --text: #eef2f7;
+      --muted: #a9b6c4;
+      --pill-bg: #223047;
+      --btn-bg: #f2c14e;
+      --btn-text: #10161f;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #10161f;
+    --card-bg: #1a2330;
+    --accent: #f2c14e;
+    --text: #eef2f7;
+    --muted: #a9b6c4;
+    --pill-bg: #223047;
+    --btn-bg: #f2c14e;
+    --btn-text: #10161f;
+  }
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); height: 100%; }
+  body {
+    height: 100%;
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 24px 16px 40px;
+  }
+  .wrap { max-width: 640px; width: 100%; }
+  h1 { font-size: 1.25rem; color: var(--accent); text-align: center; margin-bottom: 2px; }
+  .subtitle { text-align: center; color: var(--muted); font-size: 0.9rem; margin-bottom: 20px; }
+  .controls { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 22px; }
+  button {
+    border: none; border-radius: 999px; padding: 12px 22px; font-size: 1rem; font-weight: 600;
+    cursor: pointer; background: var(--btn-bg); color: var(--btn-text);
+  }
+  button:active { transform: scale(0.96); }
+  button:disabled { opacity: 0.5; cursor: not-allowed; }
+  .rate-row { display: flex; align-items: center; gap: 10px; justify-content: center; margin-bottom: 20px; color: var(--muted); font-size: 0.85rem; }
+  input[type="range"] { width: 140px; }
+  .section-label {
+    color: var(--accent); font-weight: 700; font-size: 0.85rem;
+    margin: 16px 0 6px; text-transform: uppercase; letter-spacing: 0.03em;
+  }
+  .card { background: var(--card-bg); border-radius: 16px; padding: 14px 18px; margin-bottom: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+  .card.active { outline: 2px solid var(--accent-2); }
+  .q { font-weight: 700; margin: 0 0 4px; }
+  .a { color: var(--muted); margin: 0; }
+  .status { text-align: center; color: var(--muted); font-size: 0.85rem; min-height: 18px; margin-bottom: 10px; }
+  .credit { text-align: center; color: var(--muted); font-size: 0.8rem; margin-top: 18px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Jad and Johnny — A Tour of London</h1>
+  <p class="subtitle">Questions and answers — British English narration</p>
+
+  <div class="controls">
+    <button id="playBtn">▶ Play</button>
+    <button id="pauseBtn" disabled>⏸ Pause</button>
+    <button id="stopBtn" disabled>■ Stop</button>
+  </div>
+
+  <div class="rate-row">
+    <span>Slower</span>
+    <input type="range" id="rateSlider" min="0.5" max="1" step="0.05" value="0.75">
+    <span>Faster</span>
+  </div>
+
+  <div class="status" id="status">Tap Play to start listening.</div>
+
+  <div class="section-label">A. Listen, read and find out</div>
+  <div class="card" id="c0">
+    <p class="q">1. Who is telling the story?</p>
+    <p class="a">Johnny.</p>
+  </div>
+  <div class="card" id="c1">
+    <p class="q">2. Where are Jad and Johnny?</p>
+    <p class="a">They are in London and taking a DUCK tour around the city.</p>
+  </div>
+  <div class="card" id="c2">
+    <p class="q">3. Why do people laugh at Johnny?</p>
+    <p class="a">He thinks the bus is going to drive into the water. He doesn't know it's a bus and a boat.</p>
+  </div>
+
+  <div class="section-label">2. Answer the questions</div>
+  <div class="card" id="c3">
+    <p class="q">a. In which city are Jad and Johnny?</p>
+    <p class="a">They are in London.</p>
+  </div>
+  <div class="card" id="c4">
+    <p class="q">b. Why are they there?</p>
+    <p class="a">They have won a competition and are part of an editorial team.</p>
+  </div>
+  <div class="card" id="c5">
+    <p class="q">c. What do the new friends decide to do?</p>
+    <p class="a">They decide to take a DUCK tour.</p>
+  </div>
+  <div class="card" id="c6">
+    <p class="q">d. Why is the DUCK tour special?</p>
+    <p class="a">The bus turns into a boat.</p>
+  </div>
+  <div class="card" id="c7">
+    <p class="q">e. What were the two embarrassing things that happened to Johnny during the tour?</p>
+    <p class="a">He was frightened because he thought the bus was going to drive into the river. He opened the wrong door and got wet.</p>
+  </div>
+  <div class="card" id="c8">
+    <p class="q">f. Why wasn't Johnny embarrassed?</p>
+    <p class="a">It gave him something to write about.</p>
+  </div>
+
+  <p class="credit">Dhuha Karim</p>
+</div>
+
+<script>
+  const segments = [
+    { id: "c0", text: "Question one. Who is telling the story? Answer: Johnny." },
+    { id: "c1", text: "Question two. Where are Jad and Johnny? Answer: They are in London and taking a DUCK tour around the city." },
+    { id: "c2", text: "Question three. Why do people laugh at Johnny? Answer: He thinks the bus is going to drive into the water. He doesn't know it's a bus and a boat." },
+    { id: "c3", text: "Question a. In which city are Jad and Johnny? Answer: They are in London." },
+    { id: "c4", text: "Question b. Why are they there? Answer: They have won a competition and are part of an editorial team." },
+    { id: "c5", text: "Question c. What do the new friends decide to do? Answer: They decide to take a DUCK tour." },
+    { id: "c6", text: "Question d. Why is the DUCK tour special? Answer: The bus turns into a boat." },
+    { id: "c7", text: "Question e. What were the two embarrassing things that happened to Johnny during the tour? Answer: He was frightened because he thought the bus was going to drive into the river. He opened the wrong door and got wet." },
+    { id: "c8", text: "Question f. Why wasn't Johnny embarrassed? Answer: It gave him something to write about." }
+  ];
+
+  const playBtn = document.getElementById('playBtn');
+  const pauseBtn = document.getElementById('pauseBtn');
+  const stopBtn = document.getElementById('stopBtn');
+  const statusEl = document.getElementById('status');
+  const rateSlider = document.getElementById('rateSlider');
+
+  let voices = [];
+  let chosenVoice = null;
+  let currentIndex = 0;
+  let isPaused = false;
+
+  function pickBritishVoice() {
+    voices = window.speechSynthesis.getVoices();
+    chosenVoice =
+      voices.find(v => v.lang === 'en-GB' && /female|Female|Kate|Serena|Google UK English Female/i.test(v.name)) ||
+      voices.find(v => v.lang === 'en-GB') ||
+      voices.find(v => v.lang && v.lang.startsWith('en')) ||
+      voices[0] || null;
+  }
+
+  if ('speechSynthesis' in window) {
+    window.speechSynthesis.onvoiceschanged = pickBritishVoice;
+    pickBritishVoice();
+  } else {
+    statusEl.textContent = "Sorry, this browser doesn't support text-to-speech.";
+    playBtn.disabled = true;
+  }
+
+  function clearActive() {
+    segments.forEach(s => document.getElementById(s.id).classList.remove('active'));
+  }
+
+  function speakSegment(index) {
+    if (index >= segments.length) {
+      statusEl.textContent = "Finished. Tap Play to listen again.";
+      clearActive();
+      playBtn.disabled = false;
+      pauseBtn.disabled = true;
+      stopBtn.disabled = true;
+      currentIndex = 0;
+      return;
+    }
+    currentIndex = index;
+    clearActive();
+    const seg = segments[index];
+    document.getElementById(seg.id).classList.add('active');
+    document.getElementById(seg.id).scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+    const utter = new SpeechSynthesisUtterance(seg.text);
+    if (chosenVoice) utter.voice = chosenVoice;
+    utter.lang = 'en-GB';
+    utter.rate = parseFloat(rateSlider.value);
+    utter.pitch = 1;
+
+    utter.onend = () => { if (!isPaused) speakSegment(index + 1); };
+    utter.onerror = () => { statusEl.textContent = "Playback error. Tap Play to try again."; };
+
+    statusEl.textContent = "Playing part " + (index + 1) + " of " + segments.length + "…";
+    window.speechSynthesis.speak(utter);
+  }
+
+  playBtn.addEventListener('click', () => {
+    try {
+      window.speechSynthesis.cancel();
+      isPaused = false;
+      playBtn.disabled = true;
+      pauseBtn.disabled = false;
+      stopBtn.disabled = false;
+      speakSegment(currentIndex);
+    } catch (e) {
+      statusEl.textContent = "Couldn't start playback.";
+    }
+  });
+
+  pauseBtn.addEventListener('click', () => {
+    if (window.speechSynthesis.speaking && !window.speechSynthesis.paused) {
+      window.speechSynthesis.pause();
+      isPaused = true;
+      statusEl.textContent = "Paused.";
+      pauseBtn.textContent = "▶ Resume";
+    } else if (window.speechSynthesis.paused) {
+      window.speechSynthesis.resume();
+      isPaused = false;
+      statusEl.textContent = "Playing part " + (currentIndex + 1) + " of " + segments.length + "…";
+      pauseBtn.textContent = "⏸ Pause";
+    }
+  });
+
+  stopBtn.addEventListener('click', () => {
+    window.speechSynthesis.cancel();
+    isPaused = false;
+    currentIndex = 0;
+    clearActive();
+    statusEl.textContent = "Stopped. Tap Play to start again.";
+    playBtn.disabled = false;
+    pauseBtn.disabled = true;
+    stopBtn.disabled = true;
+    pauseBtn.textContent = "⏸ Pause";
+  });
+</script>
+</body>
+</html>
