@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Round Up: Should / Shouldn't — Tap to listen</title>
+<style>
+:root{--bg:#f0f7ec;--card:#fff;--ac:#2f6a3d;--hi:#e6a817;--tx:#223022;--mu:#5c6b5c;--bt:#2f6a3d;--bx:#fff;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121a12;--card:#1d271d;--ac:#8fd39a;--tx:#eaf2ea;--mu:#b3c2b3;--bt:#8fd39a;--bx:#121a12}}
+:root[data-theme="dark"]{--bg:#121a12;--card:#1d271d;--ac:#8fd39a;--tx:#eaf2ea;--mu:#b3c2b3;--bt:#8fd39a;--bx:#121a12}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:'Segoe UI',Tahoma,Arial,sans-serif;padding:20px 14px 40px;display:flex;justify-content:center}
+.w{max-width:640px;width:100%}
+h1{font-size:1.2rem;color:var(--ac);text-align:center;margin:0 0 2px}
+.sub{text-align:center;color:var(--mu);font-size:.85rem;margin-bottom:12px}
+.rate{display:flex;align-items:center;gap:8px;justify-content:center;color:var(--mu);font-size:.8rem;margin-bottom:14px}
+.card{background:var(--card);border-radius:14px;padding:10px 12px;margin-bottom:10px;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.card h2{font-size:.8rem;text-transform:uppercase;letter-spacing:.03em;color:var(--ac);margin:2px 0 8px}
+.ln{display:flex;align-items:center;gap:10px;padding:6px 0}
+.ln+.ln{border-top:1px solid rgba(128,128,128,.18)}
+.ln span{flex:1;line-height:1.45}
+.q span{font-weight:700}
+.a span{color:var(--mu)}
+.sp{flex:none;width:38px;height:38px;border-radius:50%;border:none;background:var(--bt);color:var(--bx);display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0}
+.sp:active{transform:scale(.92)}
+.sp.on{background:var(--hi);color:#222}
+.sp svg{width:20px;height:20px;fill:currentColor}
+.cr{text-align:center;color:var(--mu);font-size:.8rem;margin-top:16px}
+</style>
+</head>
+<body>
+<div class="w">
+<h1>Round Up — Grammar: Should / Shouldn't</h1>
+<p class="sub">Tap 🔊 next to any sentence to hear it — British English</p>
+<div class="rate"><span>Slower</span><input type="range" id="rate" min="0.5" max="1" step="0.05" value="0.75"><span>Faster</span></div>
+<div id="root"></div>
+<p class="cr">Dhuha Karim</p>
+</div>
+<script>
+var D=[
+{h:"Title",l:[
+{t:"Round Up. Grammar: Should / Shouldn't",s:"Round up. Grammar: should, shouldn't."},
+{t:"Good advice ... for a better you!"},
+{t:"Listen to advice... It can make a big difference!"}]},
+{h:"1. The advice and usage",l:[
+{t:"We use should to give advice or make a suggestion."},
+{t:"We use shouldn't to say what is not a good idea or what we advise not to do."},
+{t:"For example:"},
+{t:"You should study more.",c:"a"},
+{t:"You shouldn't go to bed late.",c:"a"},
+{t:"Good advice helps you succeed!"}]},
+{h:"2. The formula",l:[
+{t:"Affirmative",c:"q"},
+{t:"You + should + base verb",s:"You, plus, should, plus, base verb."},
+{t:"e.g. You should study.",c:"a"},
+{t:"Negative",c:"q"},
+{t:"You + shouldn't + base verb",s:"You, plus, shouldn't, plus, base verb."},
+{t:"e.g. You shouldn't play.",c:"a"}]},
+{h:"3. Examples",l:[
+{t:"You should read more books."},
+{t:"You shouldn't use your phone before bed."},
+{t:"You should be on time."},
+{t:"You shouldn't eat junk food."}]},
+{h:"Remember!",l:[
+{t:"Should = advice / suggestion",s:"Should means advice, or suggestion."},
+{t:"Shouldn't = not a good idea",s:"Shouldn't means not a good idea."}]},
+{h:"4. Choose the correct answer",l:[
+{t:"Choose the correct answer: should / shouldn't or the base verb.",c:"q"}]},
+{h:"1",l:[{t:"Children ________ drink sugary drinks. It's not very healthy. (should / shouldn't)",s:"Children, blank, drink sugary drinks. It's not very healthy. Should, or shouldn't?",c:"q"},{t:"Answer: shouldn't — Children shouldn't drink sugary drinks.",s:"Answer: shouldn't. Children shouldn't drink sugary drinks.",c:"a"}]},
+{h:"2",l:[{t:"You ________ go to that restaurant. The food is bad. (should / shouldn't)",s:"You, blank, go to that restaurant. The food is bad. Should, or shouldn't?",c:"q"},{t:"Answer: shouldn't — You shouldn't go to that restaurant.",s:"Answer: shouldn't. You shouldn't go to that restaurant.",c:"a"}]},
+{h:"3",l:[{t:"The government ________ help people in need. (should / shouldn't)",s:"The government, blank, help people in need. Should, or shouldn't?",c:"q"},{t:"Answer: should — The government should help people in need.",s:"Answer: should. The government should help people in need.",c:"a"}]},
+{h:"4",l:[{t:"You shouldn't ________ so much coffee; it's bad for your blood pressure. (drink / drank)",s:"You shouldn't, blank, so much coffee; it's bad for your blood pressure. Drink, or drank?",c:"q"},{t:"Answer: drink — You shouldn't drink so much coffee.",s:"Answer: drink. You shouldn't drink so much coffee.",c:"a"}]},
+{h:"5",l:[{t:"You should ________ more exercise. (do / did)",s:"You should, blank, more exercise. Do, or did?",c:"q"},{t:"Answer: do — You should do more exercise.",s:"Answer: do. You should do more exercise.",c:"a"}]},
+{h:"5. Practice",l:[{t:"Practice: Do the exercise."},{t:"Small steps... Big progress!"}]}
+];
+var ICON='<svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 8v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z"/></svg>';
+var voice=null,cur=null;
+function pick(){var v=speechSynthesis.getVoices();voice=v.find(function(x){return x.lang==='en-GB'&&/female|kate|serena/i.test(x.name)})||v.find(function(x){return x.lang==='en-GB'})||v.find(function(x){return x.lang&&x.lang.indexOf('en')===0})||null}
+if('speechSynthesis' in window){speechSynthesis.onvoiceschanged=pick;pick()}
+function btn(say){var b=document.createElement('button');b.className='sp';b.type='button';b.setAttribute('aria-label','Listen');b.innerHTML=ICON;b.onclick=function(){speak(b,say)};return b}
+function speak(b,say){
+ if(!('speechSynthesis' in window))return;
+ var same=(cur===b);speechSynthesis.cancel();
+ if(cur){cur.classList.remove('on');cur=null}
+ if(same)return;
+ var u=new SpeechSynthesisUtterance(say);
+ if(voice)u.voice=voice;u.lang='en-GB';u.rate=parseFloat(document.getElementById('rate').value);
+ u.onend=u.onerror=function(){if(cur===b){b.classList.remove('on');cur=null}};
+ cur=b;b.classList.add('on');speechSynthesis.speak(u);
+}
+var root=document.getElementById('root');
+D.forEach(function(sec){
+ var c=document.createElement('div');c.className='card';
+ var h=document.createElement('h2');h.textContent=sec.h;c.appendChild(h);
+ sec.l.forEach(function(o){
+  var r=document.createElement('div');r.className='ln '+(o.c||'');
+  r.appendChild(btn(o.s||o.t));
+  var s=document.createElement('span');s.textContent=o.t;r.appendChild(s);
+  c.appendChild(r)});
+ root.appendChild(c)});
+</script>
+</body>
+</html>
