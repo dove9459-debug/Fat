@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>How Often? — Tap to listen</title>
+<style>
+:root{--bg:#f0f7ec;--card:#fff;--ac:#2f6a3d;--hi:#e6a817;--tx:#223022;--mu:#5c6b5c;--bt:#2f6a3d;--bx:#fff;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121a12;--card:#1d271d;--ac:#8fd39a;--tx:#eaf2ea;--mu:#b3c2b3;--bt:#8fd39a;--bx:#121a12}}
+:root[data-theme="dark"]{--bg:#121a12;--card:#1d271d;--ac:#8fd39a;--tx:#eaf2ea;--mu:#b3c2b3;--bt:#8fd39a;--bx:#121a12}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:'Segoe UI',Tahoma,Arial,sans-serif;padding:20px 14px 40px;display:flex;justify-content:center}
+.w{max-width:640px;width:100%}
+h1{font-size:1.3rem;color:var(--ac);text-align:center;margin:0 0 2px}
+.sub{text-align:center;color:var(--mu);font-size:.85rem;margin-bottom:12px}
+.rate{display:flex;align-items:center;gap:8px;justify-content:center;color:var(--mu);font-size:.8rem;margin-bottom:14px}
+.card{background:var(--card);border-radius:14px;padding:10px 12px;margin-bottom:10px;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.card h2{font-size:.8rem;text-transform:uppercase;letter-spacing:.03em;color:var(--ac);margin:2px 0 8px}
+.ln{display:flex;align-items:center;gap:10px;padding:6px 0}
+.ln+.ln{border-top:1px solid rgba(128,128,128,.18)}
+.ln span{flex:1;line-height:1.45}
+.q span{font-weight:700}
+.a span{color:var(--mu)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{display:flex;align-items:center;gap:8px;background:rgba(128,128,128,.12);border-radius:999px;padding:4px 12px 4px 4px}
+.sp{flex:none;width:38px;height:38px;border-radius:50%;border:none;background:var(--bt);color:var(--bx);display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0}
+.sp:active{transform:scale(.92)}
+.sp.on{background:var(--hi);color:#222}
+.sp svg{width:20px;height:20px;fill:currentColor}
+.cr{text-align:center;color:var(--mu);font-size:.8rem;margin-top:16px}
+</style>
+</head>
+<body>
+<div class="w">
+<h1>How Often?</h1>
+<p class="sub">Tap 🔊 next to any sentence to hear it — British English</p>
+<div class="rate"><span>Slower</span><input type="range" id="rate" min="0.5" max="1" step="0.05" value="0.75"><span>Faster</span></div>
+<div id="root"></div>
+<p class="cr">Dhuha Karim</p>
+</div>
+<script>
+var D=[
+{h:"1. The rule",l:[
+{t:"How often + do/does + subject + base verb ...?",s:"How often, plus, do or does, plus, subject, plus, base verb?"},
+{t:"How often is used to ask about the frequency of an action."},
+{t:"Answer pattern: Subject + frequency expression + base verb ...",s:"Answer pattern: subject, plus, frequency expression, plus, base verb."},
+{t:"Example: How often do you exercise?",c:"q"},
+{t:"I exercise twice a week.",c:"a"}]},
+{h:"2. Frequency expressions",chips:["Every day","Often","Sometimes","Not very often","Once a week","Twice a week","Three times a week","Every Thursday","Regularly"]},
+{h:"Time expressions",l:[
+{t:"Time expressions can be used with: once / twice / three times + a week / a day / a month ...",s:"Time expressions can be used with: once, twice, three times, plus a week, a day, a month."}]},
+{h:"3. Examples",l:[
+{t:"1. How often do you play football?",s:"Number one. How often do you play football?",c:"q"},{t:"I play football twice a week.",c:"a"},
+{t:"2. How often does she go shopping?",s:"Number two. How often does she go shopping?",c:"q"},{t:"She goes shopping once a week.",c:"a"},
+{t:"3. How often do they watch TV?",s:"Number three. How often do they watch TV?",c:"q"},{t:"They watch TV every day.",c:"a"},
+{t:"4. How often does he read books?",s:"Number four. How often does he read books?",c:"q"},{t:"He reads books three times a week.",c:"a"},
+{t:"5. How often do you take photos?",s:"Number five. How often do you take photos?",c:"q"},{t:"I take photos often.",c:"a"}]},
+{h:"Quiz: How long / How often",l:[
+{t:"1. ____ do you go to the gym?",s:"Number one. Blank, do you go to the gym?",c:"q"},{t:"How often — I go to the gym every day.",s:"How often do you go to the gym? I go to the gym every day.",c:"a"},
+{t:"2. ____ does your mother cook dinner?",s:"Number two. Blank, does your mother cook dinner?",c:"q"},{t:"How often — She cooks dinner twice a week.",s:"How often does your mother cook dinner? She cooks dinner twice a week.",c:"a"},
+{t:"3. ____ do you visit your grandparents?",s:"Number three. Blank, do you visit your grandparents?",c:"q"},{t:"How often — I visit them every Friday.",s:"How often do you visit your grandparents? I visit them every Friday.",c:"a"},
+{t:"4. ____ do you play football?",s:"Number four. Blank, do you play football?",c:"q"},{t:"How often — I play football sometimes.",s:"How often do you play football? I play football sometimes.",c:"a"},
+{t:"5. ____ do you study English at home?",s:"Number five. Blank, do you study English at home?",c:"q"},{t:"How often — I study English three times a week.",s:"How often do you study English at home? I study English three times a week.",c:"a"},
+{t:"6. ____ do you go shopping?",s:"Number six. Blank, do you go shopping?",c:"q"},{t:"How often — I go shopping not very often.",s:"How often do you go shopping? I go shopping not very often.",c:"a"}]}
+];
+var ICON='<svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 8v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z"/></svg>';
+var voice=null,cur=null;
+function pick(){var v=speechSynthesis.getVoices();voice=v.find(function(x){return x.lang==='en-GB'&&/female|kate|serena/i.test(x.name)})||v.find(function(x){return x.lang==='en-GB'})||v.find(function(x){return x.lang&&x.lang.indexOf('en')===0})||null}
+if('speechSynthesis' in window){speechSynthesis.onvoiceschanged=pick;pick()}
+function btn(say){var b=document.createElement('button');b.className='sp';b.type='button';b.setAttribute('aria-label','Listen');b.innerHTML=ICON;b.onclick=function(){speak(b,say)};return b}
+function speak(b,say){
+ if(!('speechSynthesis' in window))return;
+ var same=(cur===b);speechSynthesis.cancel();
+ if(cur){cur.classList.remove('on');cur=null}
+ if(same)return;
+ var u=new SpeechSynthesisUtterance(say);
+ if(voice)u.voice=voice;u.lang='en-GB';u.rate=parseFloat(document.getElementById('rate').value);
+ u.onend=u.onerror=function(){if(cur===b){b.classList.remove('on');cur=null}};
+ cur=b;b.classList.add('on');speechSynthesis.speak(u);
+}
+var root=document.getElementById('root');
+D.forEach(function(sec){
+ var c=document.createElement('div');c.className='card';
+ var h=document.createElement('h2');h.textContent=sec.h;c.appendChild(h);
+ if(sec.chips){var w=document.createElement('div');w.className='chips';sec.chips.forEach(function(x){var ch=document.createElement('div');ch.className='chip';ch.appendChild(btn(x));var s=document.createElement('span');s.textContent=x;ch.appendChild(s);w.appendChild(ch)});c.appendChild(w)}
+ else sec.l.forEach(function(o){
+  var r=document.createElement('div');r.className='ln '+(o.c||'');
+  r.appendChild(btn(o.s||o.t));
+  var s=document.createElement('span');s.textContent=o.t;r.appendChild(s);
+  c.appendChild(r)});
+ root.appendChild(c)});
+</script>
+</body>
+</html>
