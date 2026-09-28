@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Unit 2 Lesson 1: Keep fit!</title>
+<style>
+  :root {
+    --bg: #f0f7ec;
+    --card-bg: #ffffff;
+    --accent: #2f6a3d;
+    --accent-2: #e6a817;
+    --text: #223022;
+    --muted: #5c6b5c;
+    --btn-bg: #2f6a3d;
+    --btn-text: #ffffff;
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #121a12;
+      --card-bg: #1d271d;
+      --accent: #8fd39a;
+      --text: #eaf2ea;
+      --muted: #b3c2b3;
+      --btn-bg: #8fd39a;
+      --btn-text: #121a12;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #121a12;
+    --card-bg: #1d271d;
+    --accent: #8fd39a;
+    --text: #eaf2ea;
+    --muted: #b3c2b3;
+    --btn-bg: #8fd39a;
+    --btn-text: #121a12;
+  }
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); height: 100%; }
+  body {
+    height: 100%;
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 24px 16px 40px;
+  }
+  .wrap { max-width: 640px; width: 100%; }
+  h1 { font-size: 1.25rem; color: var(--accent); text-align: center; margin-bottom: 2px; }
+  .subtitle { text-align: center; color: var(--muted); font-size: 0.9rem; margin-bottom: 20px; }
+  .controls { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 22px; }
+  button {
+    border: none; border-radius: 999px; padding: 12px 22px; font-size: 1rem; font-weight: 600;
+    cursor: pointer; background: var(--btn-bg); color: var(--btn-text);
+  }
+  button:active { transform: scale(0.96); }
+  button:disabled { opacity: 0.5; cursor: not-allowed; }
+  .rate-row { display: flex; align-items: center; gap: 10px; justify-content: center; margin-bottom: 20px; color: var(--muted); font-size: 0.85rem; }
+  input[type="range"] { width: 140px; }
+  .section-label {
+    color: var(--accent); font-weight: 700; font-size: 0.85rem;
+    margin: 16px 0 6px; text-transform: uppercase; letter-spacing: 0.03em;
+  }
+  .card { background: var(--card-bg); border-radius: 16px; padding: 14px 18px; margin-bottom: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+  .card.active { outline: 2px solid var(--accent-2); }
+  .card p { margin: 0; line-height: 1.5; }
+  .card .who { font-weight: 700; color: var(--accent); margin-bottom: 4px; }
+  .status { text-align: center; color: var(--muted); font-size: 0.85rem; min-height: 18px; margin-bottom: 10px; }
+  .credit { text-align: center; color: var(--muted); font-size: 0.8rem; margin-top: 18px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Unit 2 — Lesson 1: Keep fit!</h1>
+  <p class="subtitle">Healthy lifestyle — British English narration</p>
+
+  <div class="controls">
+    <button id="playBtn">▶ Play</button>
+    <button id="pauseBtn" disabled>⏸ Pause</button>
+    <button id="stopBtn" disabled>■ Stop</button>
+  </div>
+
+  <div class="rate-row">
+    <span>Slower</span>
+    <input type="range" id="rateSlider" min="0.5" max="1" step="0.05" value="0.75">
+    <span>Faster</span>
+  </div>
+
+  <div class="status" id="status">Tap Play to start listening.</div>
+
+  <div class="section-label">A. Read the article</div>
+  <div class="card" id="c0"><p>Read the article. What is each paragraph about?</p></div>
+  <div class="card" id="c1"><p class="who">Take my advice ...</p><p>Fitness is very important. Unfit people cannot enjoy life. They get tired very quickly, so they cannot play games. They cannot run. In fact, they cannot even walk without getting tired and out of breath. So, if you want to enjoy life, you should get fit and keep fit.</p></div>
+  <div class="card" id="c2"><p>Swimming and cycling are also very good forms of exercise. If you don't like any of these, you can just go walking. You should walk quickly for about 20 minutes every day. Walking slowly will not make you fit, and walking to your bedroom will not either!</p></div>
+  <div class="card" id="c3"><p>Some people think that taking exercise is boring, but it doesn't have to be. If you take exercise with your friends, you will have fun.</p></div>
+  <div class="card" id="c4"><p>"I'm fit. Are you?"</p></div>
+
+  <div class="section-label">B. Give advice</div>
+  <div class="card" id="c5"><p>Give advice to the people who are unfit. You should ...</p></div>
+  <div class="card" id="c6"><p class="who">Giving advice with "should"</p><p>You need to get fit. You should take some exercise.</p><p>You're always tired. You shouldn't go to bed late.</p></div>
+
+  <div class="section-label">Which of the people do you think is fit?</div>
+  <div class="card" id="c7"><p class="who">1. Zaid</p><p>"They won't let me play. I get tired quickly."</p></div>
+  <div class="card" id="c8"><p class="who">2. Sana</p><p>"I watch TV all the time."</p></div>
+  <div class="card" id="c9"><p class="who">3. Hanaa</p><p>"I love running."</p></div>
+  <div class="card" id="c10"><p class="who">4. Younis</p><p>"I love my car. I drive everywhere."</p></div>
+
+  <p class="credit">Dhuha Karim</p>
+</div>
+
+<script>
+  const segments = [
+    { id: "c0", text: "Unit two. Lesson one. Keep fit! A. Read the article. What is each paragraph about?" },
+    { id: "c1", text: "Take my advice. Fitness is very important. Unfit people cannot enjoy life. They get tired very quickly, so they cannot play games. They cannot run. In fact, they cannot even walk without getting tired and out of breath. So, if you want to enjoy life, you should get fit and keep fit." },
+    { id: "c2", text: "Swimming and cycling are also very good forms of exercise. If you don't like any of these, you can just go walking. You should walk quickly for about twenty minutes every day. Walking slowly will not make you fit, and walking to your bedroom will not either!" },
+    { id: "c3", text: "Some people think that taking exercise is boring, but it doesn't have to be. If you take exercise with your friends, you will have fun." },
+    { id: "c4", text: "I'm fit. Are you?" },
+    { id: "c5", text: "B. Give advice to the people who are unfit. You should..." },
+    { id: "c6", text: "Giving advice with should. You need to get fit. You should take some exercise. You're always tired. You shouldn't go to bed late." },
+    { id: "c7", text: "Which of the people do you think is fit? Number one, Zaid. They won't let me play. I get tired quickly." },
+    { id: "c8", text: "Number two, Sana. I watch TV all the time." },
+    { id: "c9", text: "Number three, Hanaa. I love running." },
+    { id: "c10", text: "Number four, Younis. I love my car. I drive everywhere." }
+  ];
+
+  const playBtn = document.getElementById('playBtn');
+  const pauseBtn = document.getElementById('pauseBtn');
+  const stopBtn = document.getElementById('stopBtn');
+  const statusEl = document.getElementById('status');
+  const rateSlider = document.getElementById('rateSlider');
+
+  let voices = [];
+  let chosenVoice = null;
+  let currentIndex = 0;
+  let isPaused = false;
+
+  function pickBritishVoice() {
+    voices = window.speechSynthesis.getVoices();
+    chosenVoice =
+      voices.find(v => v.lang === 'en-GB' && /female|Female|Kate|Serena|Google UK English Female/i.test(v.name)) ||
+      voices.find(v => v.lang === 'en-GB') ||
+      voices.find(v => v.lang && v.lang.startsWith('en')) ||
+      voices[0] || null;
+  }
+
+  if ('speechSynthesis' in window) {
+    window.speechSynthesis.onvoiceschanged = pickBritishVoice;
+    pickBritishVoice();
+  } else {
+    statusEl.textContent = "Sorry, this browser doesn't support text-to-speech.";
+    playBtn.disabled = true;
+  }
+
+  function clearActive() {
+    segments.forEach(s => document.getElementById(s.id).classList.remove('active'));
+  }
+
+  function speakSegment(index) {
+    if (index >= segments.length) {
+      statusEl.textContent = "Finished. Tap Play to listen again.";
+      clearActive();
+      playBtn.disabled = false;
+      pauseBtn.disabled = true;
+      stopBtn.disabled = true;
+      currentIndex = 0;
+      return;
+    }
+    currentIndex = index;
+    clearActive();
+    const seg = segments[index];
+    document.getElementById(seg.id).classList.add('active');
+    document.getElementById(seg.id).scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+    const utter = new SpeechSynthesisUtterance(seg.text);
+    if (chosenVoice) utter.voice = chosenVoice;
+    utter.lang = 'en-GB';
+    utter.rate = parseFloat(rateSlider.value);
+    utter.pitch = 1;
+
+    utter.onend = () => { if (!isPaused) speakSegment(index + 1); };
+    utter.onerror = () => { statusEl.textContent = "Playback error. Tap Play to try again."; };
+
+    statusEl.textContent = "Playing part " + (index + 1) + " of " + segments.length + "…";
+    window.speechSynthesis.speak(utter);
+  }
+
+  playBtn.addEventListener('click', () => {
+    try {
+      window.speechSynthesis.cancel();
+      isPaused = false;
+      playBtn.disabled = true;
+      pauseBtn.disabled = false;
+      stopBtn.disabled = false;
+      speakSegment(currentIndex);
+    } catch (e) {
+      statusEl.textContent = "Couldn't start playback.";
+    }
+  });
+
+  pauseBtn.addEventListener('click', () => {
+    if (window.speechSynthesis.speaking && !window.speechSynthesis.paused) {
+      window.speechSynthesis.pause();
+      isPaused = true;
+      statusEl.textContent = "Paused.";
+      pauseBtn.textContent = "▶ Resume";
+    } else if (window.speechSynthesis.paused) {
+      window.speechSynthesis.resume();
+      isPaused = false;
+      statusEl.textContent = "Playing part " + (currentIndex + 1) + " of " + segments.length + "…";
+      pauseBtn.textContent = "⏸ Pause";
+    }
+  });
+
+  stopBtn.addEventListener('click', () => {
+    window.speechSynthesis.cancel();
+    isPaused = false;
+    currentIndex = 0;
+    clearActive();
+    statusEl.textContent = "Stopped. Tap Play to start again.";
+    playBtn.disabled = false;
+    pauseBtn.disabled = true;
+    stopBtn.disabled = true;
+    pauseBtn.textContent = "⏸ Pause";
+  });
+</script>
+</body>
+</html>
