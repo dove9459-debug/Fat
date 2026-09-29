@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Jad and Johnny — Camping at Stonehenge</title>
+<style>
+  :root {
+    --bg: #fdf3e7;
+    --card-bg: #ffffff;
+    --accent: #a3541f;
+    --accent-2: #e6a817;
+    --text: #33261c;
+    --muted: #7a6a5b;
+    --btn-bg: #a3541f;
+    --btn-text: #ffffff;
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #1c1510;
+      --card-bg: #271f19;
+      --accent: #f0b06a;
+      --text: #f2ece5;
+      --muted: #c6b6a8;
+      --btn-bg: #f0b06a;
+      --btn-text: #1c1510;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #1c1510;
+    --card-bg: #271f19;
+    --accent: #f0b06a;
+    --text: #f2ece5;
+    --muted: #c6b6a8;
+    --btn-bg: #f0b06a;
+    --btn-text: #1c1510;
+  }
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); height: 100%; }
+  body {
+    height: 100%;
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 24px 16px 40px;
+  }
+  .wrap { max-width: 640px; width: 100%; }
+  h1 { font-size: 1.2rem; color: var(--accent); text-align: center; margin-bottom: 2px; }
+  .subtitle { text-align: center; color: var(--muted); font-size: 0.9rem; margin-bottom: 18px; }
+  .controls { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px; }
+  button {
+    border: none; border-radius: 999px; padding: 12px 22px; font-size: 1rem; font-weight: 600;
+    cursor: pointer; background: var(--btn-bg); color: var(--btn-text);
+  }
+  button:active { transform: scale(0.96); }
+  button:disabled { opacity: 0.5; cursor: not-allowed; }
+  .rate-row { display: flex; align-items: center; gap: 10px; justify-content: center; margin-bottom: 18px; color: var(--muted); font-size: 0.85rem; }
+  input[type="range"] { width: 140px; }
+  .section-label {
+    color: var(--accent); font-weight: 700; font-size: 0.85rem;
+    margin: 14px 0 6px; text-transform: uppercase; letter-spacing: 0.03em;
+  }
+  .card { background: var(--card-bg); border-radius: 16px; padding: 12px 18px; margin-bottom: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+  .card.active { outline: 2px solid var(--accent-2); }
+  .card p { margin: 0; line-height: 1.5; }
+  .status { text-align: center; color: var(--muted); font-size: 0.85rem; min-height: 18px; margin-bottom: 10px; }
+  .credit { text-align: center; color: var(--muted); font-size: 0.8rem; margin-top: 18px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Jad and Johnny — Camping at Stonehenge</h1>
+  <p class="subtitle">Listen, read and find out — British English narration</p>
+
+  <div class="controls">
+    <button id="playBtn">▶ Play</button>
+    <button id="pauseBtn" disabled>⏸ Pause</button>
+    <button id="stopBtn" disabled>■ Stop</button>
+  </div>
+
+  <div class="rate-row">
+    <span>Slower</span>
+    <input type="range" id="rateSlider" min="0.5" max="1" step="0.05" value="0.75">
+    <span>Faster</span>
+  </div>
+
+  <div class="status" id="status">Tap Play to start listening.</div>
+
+  <div class="section-label">Questions</div>
+  <div class="card" id="q0"><p>Where are the boys?</p></div>
+  <div class="card" id="q1"><p>Which new characters are introduced?</p></div>
+  <div class="card" id="q2"><p>What happens to Jad?</p></div>
+
+  <div class="section-label">Story</div>
+  <div class="card" id="s0"><p>The other winners of the competition arrived in London the next morning. There was me, Jad and three other boys – Paolo from Italy, Marcus from the USA and Aziz from Algeria. We all got into a minibus to start our trip. We didn't know where we were going. The leader of the trip was called Tom, and he was driving.</p></div>
+  <div class="card" id="s1"><p>After a few hours, the minibus stopped. We were next to a group of very large stones in a circle.</p></div>
+  <div class="card" id="s2"><p>"Welcome to Stonehenge!" said Tom.</p></div>
+  <div class="card" id="s3"><p>"Wow!" said Jad. "It's beautiful! But ... what is it?"</p></div>
+  <div class="card" id="s4"><p>"That's a very good question," said a woman who had joined us. Her name was Clara, and she was a tour guide at Stonehenge. "Nobody knows because it's over four thousand years old. Come for a walk with me, and I'll tell you more about it," she said.</p></div>
+  <div class="card" id="s5"><p>"We think people came here a long time ago to study the sky," Clara said as we walked around the stones. "They watched the way the Sun, the Moon and the stars moved."</p></div>
+  <div class="card" id="s6"><p>"So, it was for astronomy," Aziz said.</p></div>
+  <div class="card" id="s7"><p>"Exactly," said Clara. "But the stones are so big and heavy, the question is – how did people build it?"</p></div>
+  <div class="card" id="s8"><p>"Did they use trucks and cranes?" asked Marcus.</p></div>
+  <div class="card" id="s9"><p>"Trucks and cranes?" I laughed. "It was four thousand years ago!"</p></div>
+  <div class="card" id="s10"><p>"Some people think they were built by giants," said Clara. "Or by magic."</p></div>
+  <div class="card" id="s11"><p>"Maybe aliens put them here," Jad joked.</p></div>
+  <div class="card" id="s12"><p>"Well," said Clara. "Some people think that, too. They believe ..."</p></div>
+
+  <p class="credit">Dhuha Karim</p>
+</div>
+
+<script>
+  const segments = [
+    { id: "q0", text: "Question one. Where are the boys?" },
+    { id: "q1", text: "Question two. Which new characters are introduced?" },
+    { id: "q2", text: "Question three. What happens to Jad?" },
+    { id: "s0", text: "The other winners of the competition arrived in London the next morning. There was me, Jad and three other boys, Paolo from Italy, Marcus from the USA, and Aziz from Algeria. We all got into a minibus to start our trip. We didn't know where we were going. The leader of the trip was called Tom, and he was driving." },
+    { id: "s1", text: "After a few hours, the minibus stopped. We were next to a group of very large stones in a circle." },
+    { id: "s2", text: "Welcome to Stonehenge! said Tom." },
+    { id: "s3", text: "Wow! said Jad. It's beautiful! But... what is it?" },
+    { id: "s4", text: "That's a very good question, said a woman who had joined us. Her name was Clara, and she was a tour guide at Stonehenge. Nobody knows because it's over four thousand years old. Come for a walk with me, and I'll tell you more about it, she said." },
+    { id: "s5", text: "We think people came here a long time ago to study the sky, Clara said as we walked around the stones. They watched the way the Sun, the Moon and the stars moved." },
+    { id: "s6", text: "So, it was for astronomy, Aziz said." },
+    { id: "s7", text: "Exactly, said Clara. But the stones are so big and heavy, the question is, how did people build it?" },
+    { id: "s8", text: "Did they use trucks and cranes? asked Marcus." },
+    { id: "s9", text: "Trucks and cranes? I laughed. It was four thousand years ago!" },
+    { id: "s10", text: "Some people think they were built by giants, said Clara. Or by magic." },
+    { id: "s11", text: "Maybe aliens put them here, Jad joked." },
+    { id: "s12", text: "Well, said Clara. Some people think that, too. They believe..." }
+  ];
+
+  const playBtn = document.getElementById('playBtn');
+  const pauseBtn = document.getElementById('pauseBtn');
+  const stopBtn = document.getElementById('stopBtn');
+  const statusEl = document.getElementById('status');
+  const rateSlider = document.getElementById('rateSlider');
+
+  let voices = [];
+  let chosenVoice = null;
+  let currentIndex = 0;
+  let isPaused = false;
+
+  function pickBritishVoice() {
+    voices = window.speechSynthesis.getVoices();
+    chosenVoice =
+      voices.find(v => v.lang === 'en-GB' && /female|Female|Kate|Serena|Google UK English Female/i.test(v.name)) ||
+      voices.find(v => v.lang === 'en-GB') ||
+      voices.find(v => v.lang && v.lang.startsWith('en')) ||
+      voices[0] || null;
+  }
+
+  if ('speechSynthesis' in window) {
+    window.speechSynthesis.onvoiceschanged = pickBritishVoice;
+    pickBritishVoice();
+  } else {
+    statusEl.textContent = "Sorry, this browser doesn't support text-to-speech.";
+    playBtn.disabled = true;
+  }
+
+  function clearActive() {
+    segments.forEach(s => document.getElementById(s.id).classList.remove('active'));
+  }
+
+  function speakSegment(index) {
+    if (index >= segments.length) {
+      statusEl.textContent = "Finished. Tap Play to listen again.";
+      clearActive();
+      playBtn.disabled = false;
+      pauseBtn.disabled = true;
+      stopBtn.disabled = true;
+      currentIndex = 0;
+      return;
+    }
+    currentIndex = index;
+    clearActive();
+    const seg = segments[index];
+    document.getElementById(seg.id).classList.add('active');
+    document.getElementById(seg.id).scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+    const utter = new SpeechSynthesisUtterance(seg.text);
+    if (chosenVoice) utter.voice = chosenVoice;
+    utter.lang = 'en-GB';
+    utter.rate = parseFloat(rateSlider.value);
+    utter.pitch = 1;
+
+    utter.onend = () => { if (!isPaused) speakSegment(index + 1); };
+    utter.onerror = () => { statusEl.textContent = "Playback error. Tap Play to try again."; };
+
+    statusEl.textContent = "Playing part " + (index + 1) + " of " + segments.length + "…";
+    window.speechSynthesis.speak(utter);
+  }
+
+  playBtn.addEventListener('click', () => {
+    try {
+      window.speechSynthesis.cancel();
+      isPaused = false;
+      playBtn.disabled = true;
+      pauseBtn.disabled = false;
+      stopBtn.disabled = false;
+      speakSegment(currentIndex);
+    } catch (e) {
+      statusEl.textContent = "Couldn't start playback.";
+    }
+  });
+
+  pauseBtn.addEventListener('click', () => {
+    if (window.speechSynthesis.speaking && !window.speechSynthesis.paused) {
+      window.speechSynthesis.pause();
+      isPaused = true;
+      statusEl.textContent = "Paused.";
+      pauseBtn.textContent = "▶ Resume";
+    } else if (window.speechSynthesis.paused) {
+      window.speechSynthesis.resume();
+      isPaused = false;
+      statusEl.textContent = "Playing part " + (currentIndex + 1) + " of " + segments.length + "…";
+      pauseBtn.textContent = "⏸ Pause";
+    }
+  });
+
+  stopBtn.addEventListener('click', () => {
+    window.speechSynthesis.cancel();
+    isPaused = false;
+    currentIndex = 0;
+    clearActive();
+    statusEl.textContent = "Stopped. Tap Play to start again.";
+    playBtn.disabled = false;
+    pauseBtn.disabled = true;
+    stopBtn.disabled = true;
+    pauseBtn.textContent = "⏸ Pause";
+  });
+</script>
+</body>
+</html>
