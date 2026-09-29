@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Write a letter to a sick friend — Tap to listen</title>
+<style>
+:root{--bg:#fdf3f7;--card:#fff;--ac:#8e3b76;--hi:#e6a817;--tx:#2f2436;--mu:#7a6b7f;--bt:#8e3b76;--bx:#fff;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1c1420;--card:#2a1f2b;--ac:#f0b6de;--tx:#f2ecf3;--mu:#c6b6c8;--bt:#f0b6de;--bx:#1c1420}}
+:root[data-theme="dark"]{--bg:#1c1420;--card:#2a1f2b;--ac:#f0b6de;--tx:#f2ecf3;--mu:#c6b6c8;--bt:#f0b6de;--bx:#1c1420}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:'Segoe UI',Tahoma,Arial,sans-serif;padding:20px 14px 40px;display:flex;justify-content:center}
+.w{max-width:640px;width:100%}
+h1{font-size:1.2rem;color:var(--ac);text-align:center;margin:0 0 2px}
+.sub{text-align:center;color:var(--mu);font-size:.85rem;margin-bottom:12px}
+.rate{display:flex;align-items:center;gap:8px;justify-content:center;color:var(--mu);font-size:.8rem;margin-bottom:14px}
+.card{background:var(--card);border-radius:14px;padding:10px 12px;margin-bottom:10px;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.card h2{font-size:.8rem;text-transform:uppercase;letter-spacing:.03em;color:var(--ac);margin:2px 0 8px}
+.ln{display:flex;align-items:center;gap:10px;padding:6px 0}
+.ln+.ln{border-top:1px solid rgba(128,128,128,.18)}
+.ln span{flex:1;line-height:1.45}
+.sp{flex:none;width:38px;height:38px;border-radius:50%;border:none;background:var(--bt);color:var(--bx);display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0}
+.sp:active{transform:scale(.92)}
+.sp.on{background:var(--hi);color:#222}
+.sp svg{width:20px;height:20px;fill:currentColor}
+.cr{text-align:center;color:var(--mu);font-size:.8rem;margin-top:16px}
+</style>
+</head>
+<body>
+<div class="w">
+<h1>Unit 2 — Write a letter to a sick friend</h1>
+<p class="sub">Tap 🔊 next to any sentence to hear it — British English</p>
+<div class="rate"><span>Slower</span><input type="range" id="rate" min="0.5" max="1" step="0.05" value="0.75"><span>Faster</span></div>
+<div id="root"></div>
+<p class="cr">Dhuha Karim</p>
+</div>
+<script>
+var D=[
+{h:"The letter",l:[
+{t:"Dear Rizan,",s:"Dear Rizan."},
+{t:"I am sorry to hear about your sickness."},
+{t:"We all at school miss you and we wish your return as fast as possible."},
+{t:"Everything at school is fine, all teachers ask about you and they want you to get back to school soon.",s:"Every thing at school is fine, all teachers ask about you and they want you to get back to school soon."},
+{t:"All the friends will visit you on Friday to see you."},
+{t:"See you soon,"},
+{t:"Suha"}]},
+{h:"Useful phrases & ideas",l:[
+{t:"1. Say hello — \"Dear Rizan\"",s:"One. Say hello. Dear Rizan."},
+{t:"2. Show you care — \"I'm sorry you are sick\"",s:"Two. Show you care. I'm sorry you are sick."},
+{t:"3. Say you miss him — \"We all miss you\"",s:"Three. Say you miss him. We all miss you."},
+{t:"4. Give school news — \"Everything is fine\"",s:"Four. Give school news. Everything is fine."},
+{t:"5. Give good news — \"We'll visit on Friday\"",s:"Five. Give good news. We'll visit on Friday."},
+{t:"6. Close and sign — \"See you soon, Suha\"",s:"Six. Close and sign. See you soon, Suha."}]}
+];
+var ICON='<svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 8v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z"/></svg>';
+var voice=null,cur=null;
+function pick(){var v=speechSynthesis.getVoices();voice=v.find(function(x){return x.lang==='en-GB'&&/female|kate|serena/i.test(x.name)})||v.find(function(x){return x.lang==='en-GB'})||v.find(function(x){return x.lang&&x.lang.indexOf('en')===0})||null}
+if('speechSynthesis' in window){speechSynthesis.onvoiceschanged=pick;pick()}
+function btn(say){var b=document.createElement('button');b.className='sp';b.type='button';b.setAttribute('aria-label','Listen');b.innerHTML=ICON;b.onclick=function(){speak(b,say)};return b}
+function speak(b,say){
+ if(!('speechSynthesis' in window))return;
+ var same=(cur===b);speechSynthesis.cancel();
+ if(cur){cur.classList.remove('on');cur=null}
+ if(same)return;
+ var u=new SpeechSynthesisUtterance(say);
+ if(voice)u.voice=voice;u.lang='en-GB';u.rate=parseFloat(document.getElementById('rate').value);
+ u.onend=u.onerror=function(){if(cur===b){b.classList.remove('on');cur=null}};
+ cur=b;b.classList.add('on');speechSynthesis.speak(u);
+}
+var root=document.getElementById('root');
+D.forEach(function(sec){
+ var c=document.createElement('div');c.className='card';
+ var h=document.createElement('h2');h.textContent=sec.h;c.appendChild(h);
+ sec.l.forEach(function(o){
+  var r=document.createElement('div');r.className='ln';
+  r.appendChild(btn(o.s||o.t));
+  var s=document.createElement('span');s.textContent=o.t;r.appendChild(s);
+  c.appendChild(r)});
+ root.appendChild(c)});
+</script>
+</body>
+</html>
